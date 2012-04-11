@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<title>JSDot View Demo</title>
+		<link type="text/css" rel="stylesheet" href="../style/shapes.css"/>
+		<script type="text/javascript" src="jsdot.min.js"></script>
+
+		<script type="text/javascript">
+			function load() {
+				JSDot("mygraph", {json: '{"nodes":[{"name":"n1","position":[50,50]}],"edges":[]}'});
+			}
+		</script>
+	</head>
+	<body onload="load()">
+		<div id="mygraph" style="height:10cm; width:10cm;"></div>
+	</body>
+</html>

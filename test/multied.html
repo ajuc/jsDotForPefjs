@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Multiple editors in a single document</title>
+		<script type="text/javascript" src="../core/jsdot-dev.js"></script>
+	</head>
+	<style type="text/css">
+		p { text-align: justify; margin-left:1em; margin-right:1em; }
+		#graph1 { width:10cm; height:4cm; float:right; background-color:lavender; margin:auto 1em auto 1em; }
+		#graph2 { width:15cm; height:10cm; background-color:lavender; margin: 2em auto 2em auto; }
+		#graph3 { width:10cm; height:4cm; float:left; background-color:lavender; margin:auto 1em auto 1em; }
+	</style>
+
+	<body>
+		
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia mauris a ligula blandit imperdiet. In pretium, enim posuere tempus porttitor, erat mi fringilla eros, vitae accumsan purus nulla sit amet magna. Cras facilisis commodo nibh, vitae placerat massa dignissim eleifend. Nulla facilisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris iaculis rutrum elementum. Maecenas vehicula laoreet velit non blandit. Curabitur tempor semper dui, et dapibus odio ultrices vel. Etiam interdum nunc sed velit condimentum imperdiet. Donec blandit, nulla id bibendum sodales, metus sapien laoreet sapien, non venenatis diam arcu quis nisi. Fusce nec scelerisque ligula. Nam ut dignissim nunc. Pellentesque sit amet ante urna. Vestibulum gravida, purus eu euismod tempus, orci odio rhoncus nulla, at sollicitudin lectus metus eget justo. Donec feugiat placerat est eu tempus. Aenean pharetra tempus nibh, quis blandit ligula accumsan in. Quisque posuere urna nec diam pharetra sit amet consectetur leo accumsan. Nunc eget orci lacus.
+</p>
+
+<div id="graph1"></div>
+
+<p>
+Nullam ultrices mauris a est viverra feugiat. Vivamus pretium iaculis lobortis. Curabitur volutpat massa et magna adipiscing sed egestas metus porttitor. Etiam sagittis cursus lorem vitae lobortis. Suspendisse libero nulla, dignissim nec euismod ut, fermentum in justo. Phasellus et purus lacus, sed volutpat odio. Mauris id magna vitae ante bibendum pretium. Quisque eleifend ullamcorper magna, non vulputate purus rhoncus id. Vestibulum condimentum placerat nulla, sit amet tristique mi ornare vehicula. Quisque ornare hendrerit sem quis tempus. Phasellus aliquet, orci et pellentesque vestibulum, nulla lorem tempus urna, id accumsan eros arcu nec turpis. Praesent non purus elit. Nulla consectetur interdum nunc pharetra aliquet. Suspendisse vel nibh nulla. Proin egestas, sem consequat vehicula ullamcorper, quam augue fringilla lectus, vitae pulvinar ipsum metus at urna. Quisque eu felis vitae dui ultrices interdum.
+</p>
+
+<p>
+Phasellus placerat mi non dolor consequat eget sollicitudin dui sodales. Pellentesque eu ipsum urna. Sed non turpis lorem, ac mattis dui. Proin sed dolor nisl, vel commodo tortor. Aliquam dictum hendrerit mi, nec volutpat lorem molestie vitae. Cras vel lectus a tortor auctor aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed quis ante turpis, vestibulum varius eros. Cras vehicula dignissim ipsum, commodo iaculis felis adipiscing eget. Duis vehicula, lacus eget tempus mattis, lacus elit scelerisque enim, vel condimentum enim tortor ac dui. Praesent id ipsum ut libero blandit condimentum eget a ante. Curabitur commodo mattis ullamcorper. Nam justo nisl, gravida vel iaculis eu, egestas et leo.
+</p>
+
+<div id="graph2"></div>
+<div id="graph3"></div>
+
+<p>
+Vivamus semper imperdiet mi, quis vestibulum mauris scelerisque et. Nunc sed felis dolor. Donec malesuada sollicitudin ullamcorper. Proin nec neque non diam volutpat volutpat ut nec arcu. Nullam tincidunt aliquet risus, vel semper urna lobortis vel. Donec eget magna tristique elit pulvinar tincidunt et pulvinar mauris. Curabitur aliquet, justo eget aliquam venenatis, enim odio elementum mi, at accumsan lectus velit eu diam. Vestibulum ipsum urna, viverra ullamcorper cursus in, fringilla sed libero. Aliquam orci arcu, ultricies sed tincidunt eget, lacinia id diam. In arcu dolor, facilisis ac mollis eget, ultricies id leo. Fusce eget sapien sed ligula congue adipiscing quis a leo. Curabitur tincidunt pharetra dui id interdum. Proin vitae urna arcu, in elementum magna. In hac habitasse platea dictumst. Nullam eget tempor felis. Morbi ut sapien urna. Vestibulum lacus ipsum, gravida ut adipiscing tempus, fermentum quis arcu. Proin rutrum nisi eu urna interdum dapibus. Nunc mollis laoreet diam nec eleifend. Nulla facilisi.
+</p>
+
+<p>
+Aenean rhoncus nisi sit amet eros tempus vitae euismod dolor convallis. Curabitur sit amet nisl ante, faucibus aliquam nibh. Curabitur posuere euismod lectus, ut lobortis ipsum sollicitudin vel. Suspendisse ut mi dolor, sit amet vestibulum tortor. Etiam mollis nulla urna, et placerat mi. Etiam suscipit condimentum felis, nec pretium tortor tempor vitae. Donec lacinia consectetur velit, sit amet facilisis urna consequat in. Sed arcu quam, hendrerit vitae facilisis porttitor, laoreet et nisi. Vivamus id convallis nulla. Maecenas mattis ligula viverra metus laoreet euismod.
+</p>
+		
+	</body>
+	
+	<script type="text/javascript">
+	
+	var j = new JSDot();
+	j.addView('graph1', 'editor');
+	
+	var g = j.getGraph();
+	var n = g.createNode();
+	n.setPosition([100, 80]);
+	//n.setStencil('box');
+	n.setLabel('box node');
+	n.setStencil('box');
+	
+	
+	j.addView('graph2');
+	
+	var g = j.getGraph();
+	var n = g.createNode();
+	n.setPosition([160, 80]);
+	//n.setStencil('box');
+	n.setLabel('box node');
+	n.setStencil('box');
+	
+	
+	var j = new JSDot();
+	j.addView('graph3', 'editor');
+	
+	var g = j.getGraph();
+	var n = g.createNode();
+	n.setPosition([100, 80]);
+	//n.setStencil('box');
+	n.setLabel('box node');
+	n.setStencil('box');
+	
+	</script>
+</html>

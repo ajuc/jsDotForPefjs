@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<title>JSDot Stencil Demo</title>
+		<link type="text/css" rel="stylesheet" href="../style/ui-lightness/jquery-ui-1.8.2.custom.css"/>
+		<link type="text/css" rel="stylesheet" href="../style/shapes.css"/>
+		<link type="text/css" rel="stylesheet" href="../style/editor.css"/>
+		<script type="text/javascript" src="../lib/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="../lib/jquery-ui-1.8.2.custom.min.js"></script>
+		<script type="text/javascript" src="jsdot.min.js"></script>
+		<style type="text/css">
+			#mygraph {background-color: Lavender; display: inline-block;}
+			div.center {width: 80%; margin: 40px auto auto;}
+			
+			.diamond-stencil {
+				stroke: yellow;
+				fill: lightgray;
+			}
+			
+		</style>
+		
+		<script type="text/javascript">
+			function load() {
+				JSDot.shapes.diamond = {
+					dw: 10,
+					dh: 5,
+					
+					draw: function(n, d, g) {
+						var e = JSDot.helper.cesvg('polygon');
+						g.appendChild(e);
+						d.shape = e;
+						return e;
+					},
+		
+					setPosition: function(n, d) {
+						d.shape.setAttribute('transform', 'translate('+n.position[0]+' '+n.position[1]+')');
+					},
+		
+					getBoundaryTo: function(n, d, p) {
+					
+						//get rect dimensions
+						var height = d.size.height;
+						var width = d.size.width;
+						var x = n.position[0] - width/2;  /* left */
+						var y = n.position[1] - height/2; /* top */
+						var xi;
+						
+						var sideSlope = height/width;
+						var pSlope = (p[1] - n.position[1]) / (p[0] - n.position[0]);
+						
+						if (Math.abs(p[0] - n.position[0]) < 1) {
+							if (p[1] < n.position[1]) {
+								return [n.position[0], n.position[1]-height/2];
+							} else {
+								return [n.position[0], n.position[1]+height/2];
+							}
+						} else if (p[1] < n.position[1]) { /* top */
+							if (p[0] < n.position[0]) { /* left */
+								sideSlope = -sideSlope;
+							}
+							xi = (sideSlope * n.position[0] - pSlope * p[0] - n.position[1] + height/2 + p[1]) / (sideSlope - pSlope);
+							return [xi, pSlope * (xi - p[0]) + p[1]];
+						} else {
+							if (p[0] > n.position[0]) { /* right */
+								sideSlope = -sideSlope;
+							}
+							xi = (sideSlope * n.position[0] - pSlope * p[0] - n.position[1] - height/2 + p[1]) / (sideSlope - pSlope);
+							return [xi, pSlope * (xi - p[0]) + p[1]];
+						}
+					},
+					
+					getBBox: function(n, d) {
+						var b = d.shape.getBBox();
+						b.x += n.position[0];
+						b.y += n.position[1];
+						return b;
+					},
+					
+					setSize: function(n, d, s) {
+						var w = s.width/2 + this.dw;
+						var h = s.height/2 + s.width * Math.sqrt(2) / 16 + this.dh;
+						var p = [
+							0, -h, /* top */
+							w, 0,  /* right */
+							0, h,  /* bottom */
+							-w, 0  /* left */
+						];
+						d.shape.setAttribute('points', p.join(' '));
+						d.size = { height: 2*h, width: 2*w }; /* needed by getBoundaryTo */
+					}
+				};
+				
+				JSDot.stencils.diamond = JSDot.helper.makeCssStencil({
+					shape: JSDot.shapes.diamond,
+					cssClass: 'diamond-stencil'
+				});
+				
+				var j = new JSDot("mygraph", {mode: "editor", json: '{"nodes":[{"name":"n1","label":{"type":"plain","value":"n1"},"position":[65,57],"stencil":"circle"},{"name":1,"label":{"type":"plain","value":1},"position":[173,115],"stencil":"box"},{"name":2,"label":{"type":"plain","value":2},"position":[211,198],"stencil":"diamond"},{"name":3,"label":{"type":"plain","value":3},"position":[144,54],"stencil":"concave hexagon"}],"edges":[{"src":3,"dst":"n1","label":null,"stencil":"line"},{"src":3,"dst":1,"label":null,"stencil":"line"},{"src":1,"dst":"n1","label":null,"stencil":"bidi line"},{"src":1,"dst":2,"label":null,"stencil":"directed line"},{"src":"n1","dst":2,"label":null,"stencil":"directed line"}]}'});
+				
+			}
+		</script>
+	</head>
+
+	<body onload="load()">
+		<div class="center">
+		<div id="mygraph" style="height:10cm; width:10cm;"></div>
+		</div>
+	</body>
+</html>

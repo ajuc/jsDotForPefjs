@@ -1,0 +1,33 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Embedding JSDot</title>
+	<link type="text/css" rel="stylesheet" href="main.css"/>
+		<script type="text/javascript">
+			// <![CDATA[
+			var JSDOT_PATH = "../core/";
+			// ]]>
+		</script>
+		<script type="text/javascript" src="../core/jsdot-dev.js"></script>
+  </head>
+  <body style="background: none repeat scroll 0% 0% Lavender;">
+	<h2>The widget must be contained in the red area with a border of 0.5% on each side.</h2>
+	<div style="position: absolute; height: 100%; width: 100%;">
+		<div style="position: absolute; height: 71%; width: 71%; top: 14.5%; left: 14.5%; opacity: 0.2; background-color: rgb(200, 0, 0);"></div>
+	</div>
+	<div id="dest" style="height:70%;width:70%;top:15%;left:15%">
+	</div>
+	<script type="text/javascript">
+		var g = new JSDot({
+			targetId: "dest",
+			leftMenu:false
+		});
+		var n1 = g.newNode("a");
+		n1.setPos(250,100);
+		var n2 = g.newNode("b");
+		n2.setPos(400,100);
+		g.newEdge(n1, n2).setLabel("edge");
+		g.draw();
+	</script>
+  </body>
+</html>

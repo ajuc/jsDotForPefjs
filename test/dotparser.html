@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Dot Parser</title>
+		<script type="text/javascript" src="../dot/lib/antlr3-all.js"></script>
+		<script type="text/javascript" src="../dot/build/dotLexer.js"></script>
+		<script type="text/javascript" src="../dot/build/dotParser.js"></script>
+    </head>
+    <body>
+        <h1>Dot Parser</h1>
+		<p><a href="http://code.google.com/p/antlr-javascript/source/browse/trunk/runtime/JavaScript/examples/calculator/calculator.html">html reference</a></p>
+		<div id="out"></div>
+		<script type="text/javascript">
+			var input = "graph graphname { a -- b }";
+			var  cstream = new org.antlr.runtime.ANTLRStringStream(input),
+			     lexer = new dotLexer(cstream),
+			     tstream = new org.antlr.runtime.CommonTokenStream(lexer),
+			     parser = new dotParser(tstream);
+			var r = parser.graph();
+			
+			document.getElementById('out').innerHTML = JSON.stringify(r);
+		</script>
+
+    </body>
+</html>

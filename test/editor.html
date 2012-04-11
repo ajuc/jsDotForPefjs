@@ -1,0 +1,37 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>JSDot Editor (testing)</title>
+	<script type="text/javascript" src="../core/jsdot-dev.js"></script>
+  </head>
+  <body style="background: none repeat scroll 0% 0% Lavender;">
+
+	<h2>The widget must be contained in the red area with a border of 0.5% on each side.</h2>
+	<div style="position: absolute; height: 100%; width: 100%;">
+		<div style="position: absolute; height: 71%; width: 71%; top: 14.5%; left: 14.5%; opacity: 0.2; background-color: rgb(200, 200, 0);">
+		</div>
+		<div id="dest" style="height:70%;width:70%;top:15%;left:15%;position:absolute">
+		</div>
+	
+	</div>
+	<script type="text/javascript">
+
+	var j = new JSDot();
+	j.addView('dest', 'editor');
+	var g = j.getGraph();
+	
+	var n1 = g.createNode();
+	n1.setPosition([100,100]);
+	n1.setLabel('label1');
+	
+	var n2 = g.createNode();
+	n2.setLabel('label2');
+	n2.setStencil('box');
+	n2.setPosition([160,200]);
+	
+	var e1 = g.createEdge(n1, n2);
+	e1.setLabel('edge');
+
+	</script>
+  </body>
+</html>

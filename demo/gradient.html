@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<title>JSDot Stencil Demo</title>
+		<link type="text/css" rel="stylesheet" href="../style/ui-lightness/jquery-ui-1.8.2.custom.css"/>
+		<link type="text/css" rel="stylesheet" href="../style/shapes.css"/>
+		<link type="text/css" rel="stylesheet" href="../style/editor.css"/>
+		<script type="text/javascript" src="../lib/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="../lib/jquery-ui-1.8.2.custom.min.js"></script>
+		<script type="text/javascript" src="jsdot.min.js"></script>
+		<style type="text/css">
+			#mygraph {background-color: Lavender; display: inline-block;}
+			div.center {width: 80%; margin: 40px auto auto;}
+			
+			.gradient-stencil {
+				stroke: yellow;
+				fill: url(#TealGrad);
+			}
+			.bgrad-stencil {
+				stroke: yellow;
+				fill: url(#BlueGrad);
+			}
+			
+		</style>
+		
+		<script type="text/javascript">
+			function load() {
+				
+				JSDot.stencils.circle = JSDot.helper.makeCssStencil({
+					shape: JSDot.shapes.circle,
+					cssClass: 'gradient-stencil'
+				});
+				JSDot.stencils.box = JSDot.helper.makeCssStencil({
+					shape: JSDot.shapes.box,
+					cssClass: 'bgrad-stencil'
+				});
+				
+				var j = new JSDot("mygraph", {mode: "editor", json: '{"nodes":[{"name":"n1","label":{"type":"plain","value":"n1"},"position":[65,57],"stencil":"circle"},{"name":1,"label":{"type":"plain","value":"one"},"position":[173,115],"stencil":"box"},{"name":2,"label":{"type":"plain","value":2},"position":[211,198],"stencil":"diamond"},{"name":3,"label":{"type":"plain","value":3},"position":[144,54],"stencil":"concave hexagon"}],"edges":[{"src":3,"dst":"n1","label":null,"stencil":"line"},{"src":3,"dst":1,"label":null,"stencil":"line"},{"src":1,"dst":"n1","label":null,"stencil":"bidi line"},{"src":1,"dst":2,"label":null,"stencil":"directed line"},{"src":"n1","dst":2,"label":null,"stencil":"directed line"}]}'});
+				
+			}
+		</script>
+	</head>
+
+	<body onload="load()">
+		<div class="center">
+		<div id="mygraph" style="height:10cm; width:10cm;"></div>
+		</div>
+	</body>
+</html>

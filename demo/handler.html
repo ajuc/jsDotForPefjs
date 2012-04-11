@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<title>JSDot Handler Demo</title>
+		<link type="text/css" rel="stylesheet" href="../style/ui-lightness/jquery-ui-1.8.2.custom.css"/>
+		<link type="text/css" rel="stylesheet" href="../style/shapes.css"/>
+		<link type="text/css" rel="stylesheet" href="../style/editor.css"/>
+		<script type="text/javascript" src="../lib/jquery-1.4.2.js"></script>
+		<script type="text/javascript" src="../lib/jquery-ui-1.8.2.custom.min.js"></script>
+		<script type="text/javascript" src="jsdot.min.js"></script>
+		<style type="text/css">
+			#mygraph {background-color: Lavender; display: inline-block;}
+			#log {background-color: MistyRose; display: inline-block; float: right; height:10cm; width:5cm; overflow:-moz-scrollbars-vertical;}
+			div.center {width: 80%; margin: auto;}
+		</style>
+		
+		<script type="text/javascript">
+			function load() {
+				var j = new JSDot("mygraph", {mode: "drag", json: '{"nodes":[{"name":"n1","label":{"type":"plain","value":"n1"},"position":[65,57],"stencil":"circle"},{"name":1,"label":{"type":"plain","value":1},"position":[173,115],"stencil":"box"},{"name":2,"label":{"type":"plain","value":2},"position":[211,198],"stencil":"hexagon"},{"name":3,"label":{"type":"plain","value":3},"position":[144,54],"stencil":"concave hexagon"}],"edges":[{"src":3,"dst":"n1","label":null,"stencil":"line"},{"src":3,"dst":1,"label":null,"stencil":"line"},{"src":1,"dst":"n1","label":null,"stencil":"bidi line"},{"src":1,"dst":2,"label":null,"stencil":"directed line"},{"src":"n1","dst":2,"label":null,"stencil":"directed line"}]}'});
+				var l = document.getElementById('log');
+				
+				function sHandler(w, s) {
+					l.innerHTML += "<br/>" + (s ? "Select" : "Deselect") +
+						(w.isNode ? " node " + w.name : " edge " + w.id);
+					l.scrollTop = l.scrollHeight;
+				};
+				
+				j.addEventHandler("mygraph", "selectionchg", sHandler);
+			}
+		</script>
+	</head>
+
+	<body onload="load()">
+		<div class="center">
+		<div id="mygraph" style="height:10cm; width:10cm;"></div>
+		<div id="log">Selection Log</div>
+		</div>
+	</body>
+</html>

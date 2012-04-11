@@ -1,0 +1,66 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>JSDot JSON</title>
+	<script type="text/javascript" src="../core/jsdot-dev.js"></script>
+	<style>
+		#btnbar { width: 40%; margin: 15px 30%; position: absolute; z-index: 100; }
+		#btnbar input { font-size: 2em; }
+	</style>
+  </head>
+  <body style="background: none repeat scroll 0% 0% Lavender;" onload="load();">
+
+	<div id="btnbar">
+		<form>
+		<input type="button" id="btnClear" value="Clear"></input>
+		<input type="button" id="btnLoad" value="Load"></input>
+		<input type="button" id="btnSave" value="Save"></input>
+		<input type="button" id="btnSpring" value="Layout"></input>
+		</form>
+	</div>
+	<div style="position: absolute; height: 100%; width: 100%;">
+		<div style="position: absolute; height: 71%; width: 71%; top: 14.5%; left: 14.5%; opacity: 0.2; background-color: rgb(200, 0, 0);"></div>
+		<div id="dest" style="height:70%;width:70%;top:15%;left:15%;position:absolute">
+	</div>
+	
+	</div>
+	<script type="text/javascript">
+
+	var j = new JSDot();
+	j.addView('dest', 'editor');
+	
+	var g = {
+		nodes: [
+			{ name: 'n1', position: [100,50] },
+			{ name: 'n2', position: [150,100], stencil: 'concave hexagon' },
+			{ name: 'n3', position: [110,160] },
+		],
+		edges: [
+			{ src: 'n1', dst: 'n3', stencil: 'bidi line' },
+		],
+	};
+	
+	var save = j.exportJSON();
+	j.importJSON(g);
+	
+	function load() {
+		document.getElementById("btnClear").addEventListener('click',
+			function() { j.getGraph().clear(); }, false);
+		
+		document.getElementById("btnLoad").addEventListener('click',
+			function() { j.importJSON(save); }, false);
+		
+		document.getElementById("btnSave").addEventListener('click',
+			function() { save = j.exportJSON(); }, false);
+		
+		document.getElementById("btnSpring").addEventListener('click',
+			function() {
+				var t = j.getTool('view', 'Layout.SpringEmbedder');
+				if (t) t.doLayout();
+				else alert("fail: layout tool doesn't exist!");
+			}, false);
+	};
+	
+	</script>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--
+This file is part of the JSDot library 
+ 
+http://code.google.com/p/jsdot/
+
+Copyright (c) 2009 Lucia Blondel, Nicos Giuliani, Carlo Vanini
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+-->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>Untitled Document</title>
+		<link rel="stylesheet" href="unittest.css" type="text/css">
+		
+		<script type="text/javascript" src="jsunittest.js"></script>
+		<script type="text/javascript">
+			// <![CDATA[
+			var JSDOT_PATH = "../core/";
+			// ]]>
+		</script>
+		<script type="text/javascript" src="../core/jsdot-dev.js"></script>
+		<script type="text/javascript" src="json.js"></script>
+	</head>
+	<body>
+		
+	<div id="content">
+
+		<div id="header">
+			<h1>JavaScript unit test file for JSON representation</h1>
+		</div>
+
+		<!-- Log output (one per Runner, via {testLog: "testlog"} option)-->
+		<div id="testlog"></div>
+
+		<!-- Put sample/test html here -->
+		<div id="sample">
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	// <![CDATA[
+	new Test.Unit.Runner({
+		
+		setup: function() {
+			this.jsdot = new JSDot();
+		},
+
+		teardown: function() {
+
+		},
+		
+		testNodeCreation: function() {
+			with(this) {
+				var n = jsdot.newNode("n");
+				assert(jsdot.getNodeByName('n') == n); // node created
+				n = jsdot.newNode("n");
+				assert(n == null); // duplicate name
+				n = jsdot.newNode(); // auto-generate name
+				assert(n != null); // node created
+				assert(n.getName().length > 0); // node has a name
+			}
+		},
+		
+		testLoadJSON: function() {
+			with(this) {
+				var r = jsdot.loadJSON("this is not valid JSON");
+				assert(r == 2);
+				assert(jsdot.error);
+				assert(jsdot.error.name === 'SyntaxError');
+				assert(typeof jsdot.error.message == 'string');
+				
+				r = jsdot.loadJSON(cases.duplicateNode);
+				assert(r == 1);
+				assert(jsdot.error.name == 'RangeError');
+				assert(ops.compareGraphs(jsdot.graph, cases.duplicateNode_ref));
+				assert(typeof jsdot.error.message == 'string');
+			}
+		},
+
+		testSingleNode: function(){
+			with (this) {
+				var r = jsdot.loadJSON(cases.graph1)
+				assert(r == 0);
+				assert(ops.compareGraphs(jsdot.graph, cases.graph1_ref));
+				
+				r = jsdot.loadJSON(cases.graph1b)
+				assert(r == 0);
+				assert(ops.compareGraphs(jsdot.graph, cases.graph1_ref));
+			}
+		},
+		
+		
+		testTwoNodesAndAnEdgeUndirected: function(){
+			with (this) {
+				jsdot.loadJSON(cases.graph2)
+				assert(ops.compareGraphs(jsdot.graph, cases.graph2_ref));
+				
+				assert(JSON.stringify(JSON.parse(cases.graph2)) == jsdot.toJSON(cases.graph2));
+				
+			}		
+		},
+		
+		testTwoNodesAndAnEdgeDirected: function(){
+			with (this) {
+				jsdot.loadJSON(cases.graph3)
+				assert(ops.compareGraphs(jsdot.graph, cases.graph3_ref));
+				
+				assert(JSON.stringify(JSON.parse(cases.graph3)) == jsdot.toJSON(cases.graph3));
+			}
+		},
+	
+		testGraphThatContainsACycle: function(){
+			with (this) {
+				jsdot.loadJSON(cases.graph4)
+				assert(ops.compareGraphs(jsdot.graph, cases.graph4_ref));
+				
+				assert(JSON.stringify(JSON.parse(cases.graph4)) == jsdot.toJSON(cases.graph4));
+			}
+		},
+		
+		testConnectedGraph: function(){
+			with (this) {
+				jsdot.loadJSON(cases.graph5)
+				assert(ops.compareGraphs(jsdot.graph, cases.graph5_ref));
+				
+				assert(JSON.stringify(JSON.parse(cases.graph5)) == jsdot.toJSON(cases.graph5));
+			}
+		},
+		
+		testDisconnectedGraph: function(){
+			with (this) {
+				jsdot.loadJSON(cases.graph6)
+				assert(ops.compareGraphs(jsdot.graph, cases.graph6_ref));
+				
+				assert(JSON.stringify(JSON.parse(cases.graph6)) == jsdot.toJSON(cases.graph6));
+			}
+		}, 
+		
+		testAddNode: function() {
+			with(this) {
+				var n = jsdot.newNode("the new one");
+				var n2 = jsdot.newNode("second");
+				var e = jsdot.newEdge(n, n2);
+				assert(n.getName() == "the new one");
+				assert(n2.getName() == "second");
+				assert(e.getSrc() == n);
+				assert(e.getDst() == n2);
+			}
+		}
+	}); 
+	// ]]>
+	</script>
+	
+	</body>
+</html>
